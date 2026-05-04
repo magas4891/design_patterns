@@ -1,24 +1,25 @@
-# README
+# Design Patterns Playground
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This app is a sandbox for implementing and comparing Ruby on Rails design patterns.
 
-Things you may want to cover:
+## First services added
 
-* Ruby version
+- `Orders::RecalculateTotalService` updates order total from order items.
+- `Orders::PlaceService` validates and places cart orders.
+- `Payments::CaptureService` performs payment capture flow and updates order/payment states.
+- `Payments::FakeGateway` is an in-app payment gateway stub (no external API calls).
 
-* System dependencies
+## Quick manual check
 
-* Configuration
+Use Rails console to run a happy-path flow:
 
-* Database creation
+```ruby
+user = User.create!(name: "Demo", email: "demo@example.com", role: "customer", status: "active")
+category = Category.create!(name: "Books", slug: "books")
+product = Product.create!(name: "DDD", description: "Domain-Driven Design", price_cents: 5000, status: "active", category: category)
+order = Order.create!(user: user, status: "cart", total_cents: 0)
+OrderItem.create!(order: order, product: product, quantity: 2, unit_price_cents: product.price_cents)
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Orders::PlaceService.call(order: order)
+Payments::CaptureService.call(order: order.reload, source_token: "ok")
+```

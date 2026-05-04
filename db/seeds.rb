@@ -7,3 +7,12 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+user = User.create!(name: "Demo", email: "demo@example.com", role: "customer", status: "active")
+category = Category.create!(name: "Books", slug: "books")
+product = Product.create!(name: "DDD", description: "Domain-Driven Design", price_cents: 5000, status: "active", category: category)
+order = Order.create!(user: user, status: "cart", total_cents: 0)
+OrderItem.create!(order: order, product: product, quantity: 2, unit_price_cents: product.price_cents)
+
+Orders::PlaceService.call(order: order)
+Payments::CaptureService.call(order: order.reload, source_token: "ok")

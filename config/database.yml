@@ -8,10 +8,12 @@ default: &default
   adapter: sqlite3
   max_connections: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
+  username: <%= ENV['LOCAL_DB_USR'] %>
+  password: <%= ENV['LOCAL_DB_PWD'] %>
 
 development:
   <<: *default
-  database: storage/development.sqlite3
+  database: db/design_patterns_development.sqlite3
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

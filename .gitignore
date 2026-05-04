@@ -33,3 +33,10 @@
 # Ignore key files for decrypting credentials and more.
 /config/*.key
 
+# Ignore IDEs
+.idea/
+.vscode/
+
+# Ignore OS files
+.DS_Store
+
