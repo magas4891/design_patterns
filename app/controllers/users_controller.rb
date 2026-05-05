@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
   # GET /users or /users.json
   def index
-    @users = User.all
+    @users = Users::IndexQuery.call(params: index_query_params)
   end
 
   # GET /users/1 or /users/1.json
@@ -66,5 +66,9 @@ class UsersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def user_params
       params.expect(user: [ :name, :email, :role, :status ])
+    end
+
+    def index_query_params
+      params.permit(:q, :role, :status, :sort).to_h.symbolize_keys
     end
 end

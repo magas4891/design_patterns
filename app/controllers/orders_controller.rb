@@ -3,7 +3,7 @@ class OrdersController < ApplicationController
 
   # GET /orders or /orders.json
   def index
-    @orders = Order.all
+    @orders = Orders::IndexQuery.call(params: index_query_params)
   end
 
   # GET /orders/1 or /orders/1.json
@@ -66,5 +66,9 @@ class OrdersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def order_params
       params.expect(order: [ :user_id, :status, :total_cents, :placed_at ])
+    end
+
+    def index_query_params
+      params.permit(:status, :user_id, :placed_from, :placed_to, :sort).to_h.symbolize_keys
     end
 end
