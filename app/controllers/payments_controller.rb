@@ -3,7 +3,7 @@ class PaymentsController < ApplicationController
 
   # GET /payments or /payments.json
   def index
-    @payments = Payment.all
+    @payments = Payments::IndexQuery.call(params: index_query_params)
   end
 
   # GET /payments/1 or /payments/1.json
@@ -66,5 +66,9 @@ class PaymentsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def payment_params
       params.expect(payment: [ :order_id, :provider, :status, :amount_cents, :transaction_id, :paid_at ])
+    end
+
+    def index_query_params
+      params.permit(:status, :provider, :order_id, :paid_from, :paid_to, :sort).to_h.symbolize_keys
     end
 end
