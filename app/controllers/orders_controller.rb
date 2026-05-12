@@ -12,37 +12,41 @@ class OrdersController < ApplicationController
 
   # GET /orders/new
   def new
-    @order = Order.new
+    @form = Orders::OrderForm.new(order: Order.new)
   end
 
   # GET /orders/1/edit
   def edit
+    @form = Orders::OrderForm.new(order: @order)
   end
 
   # POST /orders or /orders.json
   def create
-    @order = Order.new(order_params)
+    @form = Orders::OrderForm.new(order: Order.new)
 
     respond_to do |format|
-      if @order.save
+      if @form.submit(order_params)
+        @order = @form.order
         format.html { redirect_to @order, notice: "Order was successfully created." }
         format.json { render :show, status: :created, location: @order }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
+        format.json { render json: @form.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # PATCH/PUT /orders/1 or /orders/1.json
+  # PATCH/PUT /orders/1 or /orders.json
   def update
+    @form = Orders::OrderForm.new(order: @order)
+
     respond_to do |format|
-      if @order.update(order_params)
+      if @form.submit(order_params)
         format.html { redirect_to @order, notice: "Order was successfully updated.", status: :see_other }
         format.json { render :show, status: :ok, location: @order }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
+        format.json { render json: @form.errors, status: :unprocessable_entity }
       end
     end
   end

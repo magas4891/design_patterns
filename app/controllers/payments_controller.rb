@@ -12,7 +12,7 @@ class PaymentsController < ApplicationController
 
   # GET /payments/new
   def new
-    @payment = Payment.new
+    @form = Payments::CapturePaymentForm.new
   end
 
   # GET /payments/1/edit
@@ -21,15 +21,16 @@ class PaymentsController < ApplicationController
 
   # POST /payments or /payments.json
   def create
-    @payment = Payment.new(payment_params)
+    @form = Payments::CapturePaymentForm.new
 
     respond_to do |format|
-      if @payment.save
-        format.html { redirect_to @payment, notice: "Payment was successfully created." }
+      if @form.submit(capture_payment_params)
+        @payment = @form.payment
+        format.html { redirect_to @payment, notice: "Payment was captured successfully." }
         format.json { render :show, status: :created, location: @payment }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @payment.errors, status: :unprocessable_entity }
+        format.json { render json: @form.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -66,6 +67,10 @@ class PaymentsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def payment_params
       params.expect(payment: [ :order_id, :provider, :status, :amount_cents, :transaction_id, :paid_at ])
+    end
+
+    def capture_payment_params
+      params.expect(capture_payment: [ :order_id, :source_token, :provider ])
     end
 
     def index_query_params

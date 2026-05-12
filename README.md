@@ -23,3 +23,12 @@ OrderItem.create!(order: order, product: product, quantity: 2, unit_price_cents:
 Orders::PlaceService.call(order: order)
 Payments::CaptureService.call(order: order.reload, source_token: "ok")
 ```
+
+## Form objects
+
+- `ApplicationForm` — `ActiveModel::Model` + `ActiveModel::Attributes` base for forms under `app/forms/`.
+- `Products::ProductForm` — wraps create/update for `Product`; controllers use it on `new`, `create`, `edit`, `update`.
+- `Orders::OrderForm` — wraps create/update for `Order` with the same controller pattern.
+- `Payments::CapturePaymentForm` — validates capture input and delegates to `Payments::CaptureService` (no raw AR write on create). **New payment** in the UI uses `capture_payment` params and the stub gateway (`source_token`: use `ok` or `fail`). Edit/update still uses the generated `Payment` form.
+
+Order must be **`placed`** before capture (same rule as the service). Use **Orders → New** or place via console/`Orders::PlaceService` after adding line items.
