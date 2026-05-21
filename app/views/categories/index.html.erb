@@ -1,16 +1,41 @@
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Categories" %>
 
-<h1>Categories</h1>
-
-<div id="categories">
-  <% @categories.each do |category| %>
-    <%= render category %>
-    <p>
-      <%= link_to "Show this category", category %>
-    </p>
-  <% end %>
+<div class="flex items-start justify-between mb-6">
+  <div>
+    <h1 class="text-2xl font-bold text-slate-800">Categories</h1>
+    <p class="text-sm text-slate-500 mt-0.5">Organize your products</p>
+  </div>
+  <%= link_to "New Category", new_category_path, class: "px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors" %>
 </div>
 
-<%= link_to "New category", new_category_path %>
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+  <table class="w-full">
+    <thead class="bg-slate-50 border-b border-slate-200">
+      <tr>
+        <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Name</th>
+        <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Slug</th>
+        <th class="px-4 py-3"></th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-slate-100">
+      <% if @categories.empty? %>
+        <tr>
+          <td colspan="3" class="px-4 py-12 text-center text-sm text-slate-400">No categories yet.</td>
+        </tr>
+      <% else %>
+        <% @categories.each do |category| %>
+          <tr class="hover:bg-slate-50/70 transition-colors">
+            <td class="px-4 py-3 text-sm font-semibold text-slate-800"><%= category.name %></td>
+            <td class="px-4 py-3">
+              <code class="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded"><%= category.slug %></code>
+            </td>
+            <td class="px-4 py-3 text-right space-x-3">
+              <%= link_to "View", category, class: "text-indigo-600 hover:text-indigo-800 text-sm font-medium" %>
+              <%= link_to "Edit", edit_category_path(category), class: "text-slate-400 hover:text-slate-600 text-sm" %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

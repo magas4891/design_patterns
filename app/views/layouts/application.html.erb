@@ -1,29 +1,60 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Design Patterns" %></title>
+    <title><%= [content_for(:title).presence, "Design Patterns"].compact.join(" · ") %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Design Patterns">
-    <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= yield :head %>
-
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
-
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <script src="https://cdn.tailwindcss.com"></script>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class="bg-slate-100 min-h-screen antialiased">
+    <div class="flex min-h-screen">
+
+      <%# ── Sidebar ── %>
+      <aside class="w-56 bg-slate-900 fixed inset-y-0 left-0 flex flex-col z-20">
+        <div class="px-5 py-4 border-b border-slate-700/60">
+          <div class="text-sm font-bold text-white tracking-tight">⚡ Design Patterns</div>
+          <div class="text-xs text-slate-400 mt-0.5">Rails 8 Sandbox</div>
+        </div>
+        <nav class="flex-1 px-2 py-3 space-y-0.5 overflow-y-auto">
+          <p class="px-3 pt-1 pb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">Resources</p>
+          <%= nav_link "Users",       users_path,       "👤" %>
+          <%= nav_link "Products",    products_path,    "📦" %>
+          <%= nav_link "Categories",  categories_path,  "🏷️" %>
+          <%= nav_link "Orders",      orders_path,      "🛒" %>
+          <%= nav_link "Order Items", order_items_path, "📋" %>
+          <%= nav_link "Payments",    payments_path,    "💳" %>
+        </nav>
+        <div class="px-5 py-3 border-t border-slate-700/60">
+          <p class="text-xs text-slate-500 leading-relaxed">Service · Query<br>Form · Decorator</p>
+        </div>
+      </aside>
+
+      <%# ── Main ── %>
+      <div class="flex-1 ml-56 flex flex-col min-h-screen">
+        <% if notice %>
+          <div class="mx-6 mt-5 flex items-center gap-2.5 px-4 py-3 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-700 text-sm font-medium" role="alert">
+            <span>✓</span><span><%= notice %></span>
+          </div>
+        <% end %>
+        <% if alert %>
+          <div class="mx-6 mt-5 flex items-center gap-2.5 px-4 py-3 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm font-medium" role="alert">
+            <span>⚠</span><span><%= alert %></span>
+          </div>
+        <% end %>
+        <main class="flex-1 p-6">
+          <%= yield %>
+        </main>
+      </div>
+
+    </div>
   </body>
 </html>

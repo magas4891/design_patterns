@@ -1,22 +1,23 @@
-<div id="<%= dom_id order %>">
-  <div>
-    <strong>User:</strong>
-    <%= order.user_name %>
+<div id="<%= dom_id order %>" class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+  <div class="px-6 py-3.5 border-b border-slate-100 bg-slate-50/80">
+    <h2 class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Order Details</h2>
   </div>
-
-  <div>
-    <strong>Status:</strong>
-    <%= order.status_label %>
-  </div>
-
-  <div>
-    <strong>Total:</strong>
-    <%= order.formatted_total %>
-  </div>
-
-  <div>
-    <strong>Placed at:</strong>
-    <%= order.formatted_placed_at %>
-  </div>
-
+  <dl class="divide-y divide-slate-100">
+    <div class="grid grid-cols-3 gap-4 px-6 py-4">
+      <dt class="text-sm font-medium text-slate-500">User</dt>
+      <dd class="col-span-2 text-sm font-semibold text-slate-800"><%= order.user_name %></dd>
+    </div>
+    <div class="grid grid-cols-3 gap-4 px-6 py-4">
+      <dt class="text-sm font-medium text-slate-500">Status</dt>
+      <dd class="col-span-2"><%= status_badge(order.status, order.status_label) %></dd>
+    </div>
+    <div class="grid grid-cols-3 gap-4 px-6 py-4">
+      <dt class="text-sm font-medium text-slate-500">Total</dt>
+      <dd class="col-span-2 text-sm font-semibold text-slate-800"><%= order.formatted_total %></dd>
+    </div>
+    <div class="grid grid-cols-3 gap-4 px-6 py-4">
+      <dt class="text-sm font-medium text-slate-500">Placed At</dt>
+      <dd class="col-span-2 text-sm text-slate-700"><%= order.formatted_placed_at || "—" %></dd>
+    </div>
+  </dl>
 </div>

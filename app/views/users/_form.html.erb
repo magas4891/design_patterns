@@ -1,9 +1,10 @@
 <%= form_with(model: user) do |form| %>
   <% if user.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
-      <ul>
+    <div class="mb-5 p-4 bg-red-50 border border-red-200 rounded-lg">
+      <h3 class="text-sm font-semibold text-red-800 mb-2">
+        <%= pluralize(user.errors.count, "error") %> prevented saving:
+      </h3>
+      <ul class="text-sm text-red-700 list-disc list-inside space-y-1">
         <% user.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
@@ -11,27 +12,25 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div>
-    <%= form.label :email, style: "display: block" %>
-    <%= form.text_field :email %>
-  </div>
-
-  <div>
-    <%= form.label :role, style: "display: block" %>
-    <%= form.text_field :role %>
-  </div>
-
-  <div>
-    <%= form.label :status, style: "display: block" %>
-    <%= form.text_field :status %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+  <div class="space-y-4">
+    <div>
+      <%= form.label :name, class: "block text-sm font-medium text-slate-700 mb-1" %>
+      <%= form.text_field :name, class: "w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" %>
+    </div>
+    <div>
+      <%= form.label :email, class: "block text-sm font-medium text-slate-700 mb-1" %>
+      <%= form.text_field :email, class: "w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" %>
+    </div>
+    <div>
+      <%= form.label :role, class: "block text-sm font-medium text-slate-700 mb-1" %>
+      <%= form.text_field :role, placeholder: "customer / admin", class: "w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder:text-slate-400" %>
+    </div>
+    <div>
+      <%= form.label :status, class: "block text-sm font-medium text-slate-700 mb-1" %>
+      <%= form.text_field :status, placeholder: "active / suspended", class: "w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder:text-slate-400" %>
+    </div>
+    <div class="pt-1">
+      <%= form.submit class: "px-5 py-2.5 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors cursor-pointer" %>
+    </div>
   </div>
 <% end %>

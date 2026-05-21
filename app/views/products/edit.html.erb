@@ -1,12 +1,16 @@
-<% content_for :title, "Editing product" %>
+<% content_for :title, "Edit Product" %>
 
-<h1>Editing product</h1>
+<div class="flex items-center gap-1.5 text-sm text-slate-400 mb-5">
+  <%= link_to "Products", products_path, class: "hover:text-slate-600 transition-colors" %>
+  <span>/</span>
+  <%= link_to @product.name, @product, class: "hover:text-slate-600 transition-colors" %>
+  <span>/</span>
+  <span class="text-slate-600 font-medium">Edit</span>
+</div>
 
-<%= render "form", form_object: @form %>
-
-<br>
-
-<div>
-  <%= link_to "Show this product", @product %> |
-  <%= link_to "Back to products", products_path %>
+<div class="max-w-lg">
+  <h1 class="text-2xl font-bold text-slate-800 mb-5">Edit Product</h1>
+  <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+    <%= render "form", form_object: @form %>
+  </div>
 </div>

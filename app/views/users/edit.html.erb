@@ -1,12 +1,16 @@
-<% content_for :title, "Editing user" %>
+<% content_for :title, "Edit User" %>
 
-<h1>Editing user</h1>
+<div class="flex items-center gap-1.5 text-sm text-slate-400 mb-5">
+  <%= link_to "Users", users_path, class: "hover:text-slate-600 transition-colors" %>
+  <span>/</span>
+  <%= link_to @user.name, @user, class: "hover:text-slate-600 transition-colors" %>
+  <span>/</span>
+  <span class="text-slate-600 font-medium">Edit</span>
+</div>
 
-<%= render "form", user: @user %>
-
-<br>
-
-<div>
-  <%= link_to "Show this user", @user %> |
-  <%= link_to "Back to users", users_path %>
+<div class="max-w-lg">
+  <h1 class="text-2xl font-bold text-slate-800 mb-5">Edit User</h1>
+  <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+    <%= render "form", user: @user %>
+  </div>
 </div>

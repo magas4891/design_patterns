@@ -1,27 +1,27 @@
-<div id="<%= dom_id product %>">
-  <div>
-    <strong>Name:</strong>
-    <%= product.name %>
+<div id="<%= dom_id product %>" class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+  <div class="px-6 py-3.5 border-b border-slate-100 bg-slate-50/80">
+    <h2 class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Product Details</h2>
   </div>
-
-  <div>
-    <strong>Description:</strong>
-    <%= product.description %>
-  </div>
-
-  <div>
-    <strong>Price:</strong>
-    <%= product.formatted_price %>
-  </div>
-
-  <div>
-    <strong>Status:</strong>
-    <%= product.status_label %>
-  </div>
-
-  <div>
-    <strong>Category:</strong>
-    <%= product.category_name %>
-  </div>
-
+  <dl class="divide-y divide-slate-100">
+    <div class="grid grid-cols-3 gap-4 px-6 py-4">
+      <dt class="text-sm font-medium text-slate-500">Name</dt>
+      <dd class="col-span-2 text-sm font-semibold text-slate-800"><%= product.name %></dd>
+    </div>
+    <div class="grid grid-cols-3 gap-4 px-6 py-4">
+      <dt class="text-sm font-medium text-slate-500">Description</dt>
+      <dd class="col-span-2 text-sm text-slate-700"><%= product.description.presence || "—" %></dd>
+    </div>
+    <div class="grid grid-cols-3 gap-4 px-6 py-4">
+      <dt class="text-sm font-medium text-slate-500">Price</dt>
+      <dd class="col-span-2 text-sm font-semibold text-slate-800"><%= product.formatted_price %></dd>
+    </div>
+    <div class="grid grid-cols-3 gap-4 px-6 py-4">
+      <dt class="text-sm font-medium text-slate-500">Status</dt>
+      <dd class="col-span-2"><%= status_badge(product.status, product.status_label) %></dd>
+    </div>
+    <div class="grid grid-cols-3 gap-4 px-6 py-4">
+      <dt class="text-sm font-medium text-slate-500">Category</dt>
+      <dd class="col-span-2 text-sm text-slate-700"><%= product.category_name %></dd>
+    </div>
+  </dl>
 </div>

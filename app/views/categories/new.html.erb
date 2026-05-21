@@ -1,11 +1,14 @@
-<% content_for :title, "New category" %>
+<% content_for :title, "New Category" %>
 
-<h1>New category</h1>
+<div class="flex items-center gap-1.5 text-sm text-slate-400 mb-5">
+  <%= link_to "Categories", categories_path, class: "hover:text-slate-600 transition-colors" %>
+  <span>/</span>
+  <span class="text-slate-600 font-medium">New</span>
+</div>
 
-<%= render "form", category: @category %>
-
-<br>
-
-<div>
-  <%= link_to "Back to categories", categories_path %>
+<div class="max-w-lg">
+  <h1 class="text-2xl font-bold text-slate-800 mb-5">New Category</h1>
+  <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+    <%= render "form", category: @category %>
+  </div>
 </div>

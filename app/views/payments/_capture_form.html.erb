@@ -1,9 +1,10 @@
 <%= form_with(model: form_object, url: payments_path) do |form| %>
   <% if form_object.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(form_object.errors.count, "error") %> prohibited this payment from being captured:</h2>
-
-      <ul>
+    <div class="mb-5 p-4 bg-red-50 border border-red-200 rounded-lg">
+      <h3 class="text-sm font-semibold text-red-800 mb-2">
+        <%= pluralize(form_object.errors.count, "error") %> prevented capture:
+      </h3>
+      <ul class="text-sm text-red-700 list-disc list-inside space-y-1">
         <% form_object.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
@@ -11,27 +12,26 @@
     </div>
   <% end %>
 
-  <p style="margin-bottom: 1rem;">
-    Uses <code>Payments::CapturePaymentForm</code> → <code>Payments::CaptureService</code> (stub gateway).
-    Order must be in <strong>placed</strong> status. Use token <code>ok</code> to succeed, <code>fail</code> to simulate decline.
-  </p>
-
-  <div>
-    <%= form.label :order_id, "Order ID", style: "display: block" %>
-    <%= form.number_field :order_id %>
+  <div class="mb-5 p-4 bg-indigo-50 border border-indigo-200 rounded-lg text-sm text-indigo-800">
+    <p class="font-semibold mb-1">How it works</p>
+    <p class="text-indigo-700">Uses <code class="bg-indigo-100 px-1 py-0.5 rounded text-xs">CapturePaymentForm</code> → <code class="bg-indigo-100 px-1 py-0.5 rounded text-xs">CaptureService</code> (stub gateway). Order must be in <strong>placed</strong> status. Token <code class="bg-indigo-100 px-1 py-0.5 rounded text-xs">ok</code> succeeds, <code class="bg-indigo-100 px-1 py-0.5 rounded text-xs">fail</code> simulates decline.</p>
   </div>
 
-  <div>
-    <%= form.label :source_token, style: "display: block" %>
-    <%= form.text_field :source_token %>
-  </div>
-
-  <div>
-    <%= form.label :provider, style: "display: block" %>
-    <%= form.text_field :provider, placeholder: "fake_gateway (default)" %>
-  </div>
-
-  <div>
-    <%= form.submit "Capture payment" %>
+  <div class="space-y-4">
+    <div>
+      <%= form.label :order_id, "Order ID", class: "block text-sm font-medium text-slate-700 mb-1" %>
+      <%= form.number_field :order_id, class: "w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" %>
+    </div>
+    <div>
+      <%= form.label :source_token, "Source Token", class: "block text-sm font-medium text-slate-700 mb-1" %>
+      <%= form.text_field :source_token, placeholder: "ok / fail", class: "w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder:text-slate-400" %>
+    </div>
+    <div>
+      <%= form.label :provider, class: "block text-sm font-medium text-slate-700 mb-1" %>
+      <%= form.text_field :provider, placeholder: "fake_gateway (default)", class: "w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder:text-slate-400" %>
+    </div>
+    <div class="pt-1">
+      <%= form.submit "Capture Payment", class: "px-5 py-2.5 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors cursor-pointer" %>
+    </div>
   </div>
 <% end %>

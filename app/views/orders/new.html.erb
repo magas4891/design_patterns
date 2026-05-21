@@ -1,11 +1,14 @@
-<% content_for :title, "New order" %>
+<% content_for :title, "New Order" %>
 
-<h1>New order</h1>
+<div class="flex items-center gap-1.5 text-sm text-slate-400 mb-5">
+  <%= link_to "Orders", orders_path, class: "hover:text-slate-600 transition-colors" %>
+  <span>/</span>
+  <span class="text-slate-600 font-medium">New</span>
+</div>
 
-<%= render "form", form_object: @form %>
-
-<br>
-
-<div>
-  <%= link_to "Back to orders", orders_path %>
+<div class="max-w-lg">
+  <h1 class="text-2xl font-bold text-slate-800 mb-5">New Order</h1>
+  <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+    <%= render "form", form_object: @form %>
+  </div>
 </div>

@@ -1,22 +1,23 @@
-<div id="<%= dom_id user %>">
-  <div>
-    <strong>Name:</strong>
-    <%= user.name %>
+<div id="<%= dom_id user %>" class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+  <div class="px-6 py-3.5 border-b border-slate-100 bg-slate-50/80">
+    <h2 class="text-xs font-semibold text-slate-500 uppercase tracking-wider">User Details</h2>
   </div>
-
-  <div>
-    <strong>Email:</strong>
-    <%= user.email %>
-  </div>
-
-  <div>
-    <strong>Role:</strong>
-    <%= user.role_label %>
-  </div>
-
-  <div>
-    <strong>Status:</strong>
-    <%= user.status_label %>
-  </div>
-
+  <dl class="divide-y divide-slate-100">
+    <div class="grid grid-cols-3 gap-4 px-6 py-4">
+      <dt class="text-sm font-medium text-slate-500">Name</dt>
+      <dd class="col-span-2 text-sm font-semibold text-slate-800"><%= user.name %></dd>
+    </div>
+    <div class="grid grid-cols-3 gap-4 px-6 py-4">
+      <dt class="text-sm font-medium text-slate-500">Email</dt>
+      <dd class="col-span-2 text-sm text-slate-700"><%= user.email %></dd>
+    </div>
+    <div class="grid grid-cols-3 gap-4 px-6 py-4">
+      <dt class="text-sm font-medium text-slate-500">Role</dt>
+      <dd class="col-span-2"><%= status_badge(user.role, user.role_label) %></dd>
+    </div>
+    <div class="grid grid-cols-3 gap-4 px-6 py-4">
+      <dt class="text-sm font-medium text-slate-500">Status</dt>
+      <dd class="col-span-2"><%= status_badge(user.status, user.status_label) %></dd>
+    </div>
+  </dl>
 </div>

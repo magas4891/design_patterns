@@ -1,16 +1,47 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title, "Order Items" %>
 
-<% content_for :title, "Order items" %>
-
-<h1>Order items</h1>
-
-<div id="order_items">
-  <% @order_items.each do |order_item| %>
-    <%= render order_item %>
-    <p>
-      <%= link_to "Show this order item", order_item %>
-    </p>
-  <% end %>
+<div class="flex items-start justify-between mb-6">
+  <div>
+    <h1 class="text-2xl font-bold text-slate-800">Order Items</h1>
+    <p class="text-sm text-slate-500 mt-0.5">Line items within orders</p>
+  </div>
+  <%= link_to "New Item", new_order_item_path, class: "px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors" %>
 </div>
 
-<%= link_to "New order item", new_order_item_path %>
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+  <table class="w-full">
+    <thead class="bg-slate-50 border-b border-slate-200">
+      <tr>
+        <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Order</th>
+        <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Product</th>
+        <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Qty</th>
+        <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Unit Price</th>
+        <th class="px-4 py-3"></th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-slate-100">
+      <% if @order_items.empty? %>
+        <tr>
+          <td colspan="5" class="px-4 py-12 text-center text-sm text-slate-400">No order items yet.</td>
+        </tr>
+      <% else %>
+        <% @order_items.each do |item| %>
+          <tr class="hover:bg-slate-50/70 transition-colors">
+            <td class="px-4 py-3">
+              <code class="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded">#<%= item.order_id %></code>
+            </td>
+            <td class="px-4 py-3">
+              <code class="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded">#<%= item.product_id %></code>
+            </td>
+            <td class="px-4 py-3 text-sm font-medium text-slate-800"><%= item.quantity %></td>
+            <td class="px-4 py-3 text-sm text-slate-600"><%= number_to_currency(item.unit_price_cents / 100.0) %></td>
+            <td class="px-4 py-3 text-right space-x-3">
+              <%= link_to "View", item, class: "text-indigo-600 hover:text-indigo-800 text-sm font-medium" %>
+              <%= link_to "Edit", edit_order_item_path(item), class: "text-slate-400 hover:text-slate-600 text-sm" %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
