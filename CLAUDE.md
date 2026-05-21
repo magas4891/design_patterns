@@ -62,6 +62,26 @@ Thin AR models — validations and associations only, no business logic. Key enu
 
 Prices/amounts are stored as integer cents (`price_cents`, `amount_cents`, `total_cents`).
 
+### Decorators (`app/decorators/`)
+
+Inherit from `ApplicationDecorator` (`SimpleDelegator`). Controllers wrap models in `show` and `index` only — `edit`/`update`/`create` use raw AR objects so form objects work correctly.
+
+```ruby
+# single object
+@product = ProductDecorator.decorate(@product)
+
+# collection (called on the AR relation result)
+@products = ProductDecorator.decorate_collection(Products::IndexQuery.call(...))
+```
+
+`ApplicationDecorator` overrides `to_partial_path` and `model_name` to delegate to the underlying object, so `render @product` still resolves to `app/views/products/_product.html.erb`.
+
+Decorated methods per class:
+- `ProductDecorator` — `formatted_price`, `status_label`, `category_name`
+- `OrderDecorator` — `formatted_total`, `formatted_placed_at`, `status_label`, `user_name`
+- `PaymentDecorator` — `formatted_amount`, `formatted_paid_at`, `status_label`
+- `UserDecorator` — `role_label`, `status_label`
+
 ## Happy-path flow (console)
 
 ```ruby

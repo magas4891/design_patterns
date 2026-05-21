@@ -11,12 +11,12 @@
 
   <div>
     <strong>Status:</strong>
-    <%= payment.status %>
+    <%= payment.status_label %>
   </div>
 
   <div>
-    <strong>Amount cents:</strong>
-    <%= payment.amount_cents %>
+    <strong>Amount:</strong>
+    <%= payment.formatted_amount %>
   </div>
 
   <div>
@@ -26,7 +26,7 @@
 
   <div>
     <strong>Paid at:</strong>
-    <%= payment.paid_at %>
+    <%= payment.formatted_paid_at %>
   </div>
 
 </div>
