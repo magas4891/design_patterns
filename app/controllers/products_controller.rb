@@ -3,11 +3,12 @@ class ProductsController < ApplicationController
 
   # GET /products or /products.json
   def index
-    @products = Products::IndexQuery.call(params: index_query_params)
+    @products = ProductDecorator.decorate_collection(Products::IndexQuery.call(params: index_query_params))
   end
 
   # GET /products/1 or /products/1.json
   def show
+    @product = ProductDecorator.decorate(@product)
   end
 
   # GET /products/new

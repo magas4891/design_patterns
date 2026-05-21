@@ -3,11 +3,12 @@ class OrdersController < ApplicationController
 
   # GET /orders or /orders.json
   def index
-    @orders = Orders::IndexQuery.call(params: index_query_params)
+    @orders = OrderDecorator.decorate_collection(Orders::IndexQuery.call(params: index_query_params))
   end
 
   # GET /orders/1 or /orders/1.json
   def show
+    @order = OrderDecorator.decorate(@order)
   end
 
   # GET /orders/new

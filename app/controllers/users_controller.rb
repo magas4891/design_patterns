@@ -3,11 +3,12 @@ class UsersController < ApplicationController
 
   # GET /users or /users.json
   def index
-    @users = Users::IndexQuery.call(params: index_query_params)
+    @users = UserDecorator.decorate_collection(Users::IndexQuery.call(params: index_query_params))
   end
 
   # GET /users/1 or /users/1.json
   def show
+    @user = UserDecorator.decorate(@user)
   end
 
   # GET /users/new

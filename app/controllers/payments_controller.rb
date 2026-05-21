@@ -3,11 +3,12 @@ class PaymentsController < ApplicationController
 
   # GET /payments or /payments.json
   def index
-    @payments = Payments::IndexQuery.call(params: index_query_params)
+    @payments = PaymentDecorator.decorate_collection(Payments::IndexQuery.call(params: index_query_params))
   end
 
   # GET /payments/1 or /payments/1.json
   def show
+    @payment = PaymentDecorator.decorate(@payment)
   end
 
   # GET /payments/new
